@@ -22,7 +22,7 @@ class constOpt:
 		for _ in self.ip:
 			self.np.append(_+self.ss)
 		self.fval2=self.f(*self.np)
-		self.df=-(self.fval2-self.fval1)
+		self.df=(self.fval2-self.fval1)
 		for i in range(0,self.ip.__len__()):
 			self.np[i]=self.ip[i]-self.lr*(self.df)/(self.ss)
 		
@@ -30,7 +30,7 @@ class constOpt:
 		# this is the inner function that is being called by the solver
 		self.fval1=self.f(*self.ip)
 		self.fval2=self.f(*self.np)
-		self.df=-(self.fval2-self.fval1)
+		self.df=(self.fval2-self.fval1)
 		temp=self.np
 		for i in range(0,self.ip.__len__()):
 			#self.np[i]=self.ip[i]-self.lr*(self.df)/(self.np[i]-self.ip[i])
@@ -40,7 +40,7 @@ class constOpt:
 	
 	def solve(self):
 		# this is the main solve function being called by user
-		while(self.df>self.tol):
+		while(self.count<1000):
 			print(self.df)
 			self.solvestep()
 			self.count+=1
@@ -52,7 +52,7 @@ if __name__=="__main__":
 	def q(a):
 		return (a+5)*(a+5)
 	
-	opt=constOpt(q,[50],50,0.5,0.000000000000000001)
+	opt=constOpt(q,[10],0.01,-0.001,0.0001)
 	answer=opt.solve()
 	print(answer)
 	
